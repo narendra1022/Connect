@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/sendOTPFragment">
+
+    <fragment
+        android:id="@+id/sendOTPFragment"
+        android:name="com.example.chatapp.OTPVerification.views.SendOTPFragment"
+        android:label="SendOTPFragment" >
+        <action
+            android:id="@+id/action_sendOTPFragment_to_OTPVerifyFragment"
+            app:destination="@id/OTPVerifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/OTPVerifyFragment"
+        android:name="com.example.chatapp.OTPVerification.views.OTPVerifyFragment"
+        android:label="OTPVerifyFragment" >
+        <action
+            android:id="@+id/action_OTPVerifyFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.chatapp.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.chatapp.Fragments.chatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="UserData"
+            app:argType="com.example.chatapp.UserData" />
+
+    </fragment>
+</navigation>

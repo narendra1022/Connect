@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.chatFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="#D9D9D9"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="99dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="1dp"
+            app:cardMaxElevation="3dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:id="@+id/iv"
+                android:scaleType="fitXY"
+                android:src="@color/black"
+                android:layout_height="55dp"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/nm"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="Narendra"
+            android:textColor="@color/black"
+            android:textSize="27dp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/view"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll"
+        android:background="@color/white"
+        android:layout_below="@id/linearLayout2"
+        android:layout_marginBottom="10dp" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/color"
+
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        >
+        <EditText
+            android:id="@+id/msg"
+            android:layout_marginStart="20dp"
+            android:layout_width="345dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            android:hint="Enter the message"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/send_msg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/sen"
+            android:layout_gravity="center_vertical"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
