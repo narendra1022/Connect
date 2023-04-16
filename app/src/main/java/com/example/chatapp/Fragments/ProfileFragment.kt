@@ -1,8 +1,6 @@
 package com.example.chatapp.Fragments
 
 import android.Manifest
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -19,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.chatapp.MainActivity
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentProfileBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,6 +39,9 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(layoutInflater)
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
 
 
         firebaseDatabase = FirebaseDatabase.getInstance(); firebaseAuth = FirebaseAuth.getInstance()
@@ -143,7 +145,7 @@ class ProfileFragment : Fragment() {
 
         binding.next.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.main, messageFragment())
+            transaction.replace(R.id.main, HomeFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -281,5 +283,12 @@ class ProfileFragment : Fragment() {
                 }
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
     }
 }

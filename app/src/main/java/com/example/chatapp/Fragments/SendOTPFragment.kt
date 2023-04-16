@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import com.example.chatapp.OTPVerification.FirebaseLoginResponseStates
 import com.example.chatapp.OTPVerification.LoginViewModel
 import com.example.chatapp.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
@@ -25,6 +26,8 @@ class SendOTPFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_send_o_t_p, container, false)
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,6 +88,13 @@ class SendOTPFragment : Fragment() {
 
     private fun isValidMobileNumber(enteredMobileNumber: String): Boolean {
         return enteredMobileNumber.length == 10 && (enteredMobileNumber[0] in '6'..'9')
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
     }
 
 

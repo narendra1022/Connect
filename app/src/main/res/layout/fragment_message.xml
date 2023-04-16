@@ -22,13 +22,6 @@
             android:layout_marginStart="10dp"
             android:layout_gravity="center"
             />
-        <ImageView
-            android:id="@+id/msgs"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="end"
-            android:layout_marginStart="220dp"
-            android:src="@drawable/message_" />
 
     </LinearLayout>
 
@@ -44,6 +37,7 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_marginTop="70dp"
+        android:layout_marginBottom="70dp"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -54,23 +48,23 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/ba"
-        app:cardCornerRadius="299dp">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/pic"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_gravity="top|end"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@drawable/ba"-->
+<!--        app:cardCornerRadius="299dp">-->
 
-        <ImageView
-            android:id="@+id/pic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="@drawable/ba"
-            android:src="@drawable/ic_baseline_add_24" />
+<!--        <ImageView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/ba"-->
+<!--            android:src="@drawable/ic_baseline_add_24" />-->
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
 
 </FrameLayout>

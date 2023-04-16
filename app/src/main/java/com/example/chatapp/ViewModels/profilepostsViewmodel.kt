@@ -2,8 +2,9 @@ package com.example.chatapp.ViewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.chatapp.PostData
 import com.example.chatapp.Resource
-import com.example.chatapp.UserData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,37 +12,39 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class profileViewmodel @Inject constructor() :ViewModel() {
-
+class profilepostsViewmodel @Inject constructor():ViewModel() {
     private val firebase = Firebase.firestore
 
-    val _data= MutableStateFlow<Resource<List<UserData>>>(Resource.unspecified())
-    val data: StateFlow<Resource<List<UserData>>> = _data
+    val _data= MutableStateFlow<Resource<List<PostData>>>(Resource.unspecified())
+    val data: StateFlow<Resource<List<PostData>>> = _data
+
 
     init {
         fetchdata()
     }
+
     private fun fetchdata() {
 
         viewModelScope.launch {
             _data.emit (Resource.Loading())
         }
 
-
-
-        firebase.collection("Users")
-            .whereEqualTo("category","profiles").get().addOnSuccessListener { result ->
-                val ProductList=result.toObjects(UserData::class.java)
-
+        firebase.collection("posts")
+            .whereEqualTo("uid",FirebaseAuth.getInstance().currentUser?.uid!!).get().addOnSuccessListener { result ->
+                val ProductList=result.toObjects(PostData::class.java)
                 viewModelScope.launch {
                     _data.emit(Resource.Success(ProductList))
                 }
 
             }
+
             .addOnFailureListener {
                 viewModelScope.launch {
                     _data.emit(Resource.Error(it.message.toString()))
                 }
             }
     }
+
+
+
 }

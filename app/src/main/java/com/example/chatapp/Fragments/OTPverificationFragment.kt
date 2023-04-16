@@ -19,6 +19,7 @@ import com.example.chatapp.OTPVerification.FirebaseLoginResponseStates
 import com.example.chatapp.OTPVerification.LoginViewModel
 import com.example.chatapp.R
 import com.example.chatapp.UserData
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -50,6 +51,11 @@ class OTPVerifyFragment(
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_o_t_pverification, container, false)
+
+            val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            bottomNavigationView?.visibility = View.GONE
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -155,6 +161,8 @@ class OTPVerifyFragment(
         hashMap["profilePicUrl"] = ""
         hashMap["uid"] = FirebaseAuth.getInstance().uid!!
         hashMap["category"] = "profiles"
+        hashMap["lastSeen"] = ""
+
 
         CoroutineScope(Dispatchers.IO).launch {
             // uploading New User Data on Firebase
@@ -174,13 +182,13 @@ class OTPVerifyFragment(
                     Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
                 }
 
-            FirebaseFirestore.getInstance().collection("posts")
-                .document(FirebaseAuth.getInstance().uid!!)
-                .set(hashMap).addOnSuccessListener {
-                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener {
-                    Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
-                }
+//            FirebaseFirestore.getInstance().collection("posts")
+//                .document(FirebaseAuth.getInstance().uid!!)
+//                .set(hashMap).addOnSuccessListener {
+//                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show()
+//                }.addOnFailureListener {
+//                    Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
+//                }
 
             FirebaseFirestore.getInstance().collection("Users")
                 .document(FirebaseAuth.getInstance().uid!!)
@@ -249,14 +257,19 @@ class OTPVerifyFragment(
     }
 
     // Canceling the CountDown when the Fragment is Destroyed
-    override fun onDestroyView() {
-        super.onDestroyView()
-        countDownTimer.cancel()
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
+
+        countDownTimer.cancel()
     }
 
 }

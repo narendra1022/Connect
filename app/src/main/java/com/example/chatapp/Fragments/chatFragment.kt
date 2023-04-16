@@ -22,6 +22,7 @@ import com.example.chatapp.R
 import com.example.chatapp.Resource
 import com.example.chatapp.UserData
 import com.example.chatapp.databinding.FragmentChatBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -44,7 +45,16 @@ class chatFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
+
         binding = FragmentChatBinding.inflate(layoutInflater)
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userRef = FirebaseFirestore.getInstance().collection("Users").document(currentUser?.uid!!)
+        userRef.update("lastSeen" ,System.currentTimeMillis())
+
         return binding.root
     }
 
@@ -62,6 +72,7 @@ class chatFragment : Fragment() {
         messageAdapter = MessageAdapter(requireContext(), messaList)
         binding.view.layoutManager = LinearLayoutManager(requireContext(),)
         binding.view.adapter = messageAdapter
+
 
 
 
@@ -121,7 +132,17 @@ class chatFragment : Fragment() {
         if (nextAnim != 0) {
             return AnimationUtils.loadAnimation(context, nextAnim)
         }
+
         return super.onCreateAnimation(transit, enter, nextAnim)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
+
+    }
+
 
 }

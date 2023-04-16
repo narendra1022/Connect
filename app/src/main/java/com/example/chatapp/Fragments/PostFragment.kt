@@ -14,7 +14,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.chatapp.MainActivity
 import com.example.chatapp.PostData
+import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentPostBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,6 +34,7 @@ class PostFragment : Fragment() {
     private var lo: String? = null
     private var post: String? = null
     private var prof: String? = null
+    var h:String="null"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,14 @@ class PostFragment : Fragment() {
 
         binding = FragmentPostBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
+
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.GONE
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userRef = FirebaseFirestore.getInstance().collection("Users").document(currentUser?.uid!!)
+        userRef.update("lastSeen" ,System.currentTimeMillis())
 
         return binding.root
     }
@@ -80,12 +91,15 @@ class PostFragment : Fragment() {
 
             val ca = binding.cap.text.toString()
 
-            val data = PostData(ca, post, nm, prof, lo, "post",firebaseAuth.currentUser?.uid!!.toString())
+            val data = PostData(UUID.randomUUID().toString(),ca,post, nm, prof, lo, "post",firebaseAuth.currentUser?.uid!!.toString(),0)
 
             FirebaseFirestore.getInstance().collection("posts")
-                .add(data).addOnSuccessListener {
+                .add(data).addOnSuccessListener { doc ->
+                    val data =doc.id
                     Toast.makeText(requireContext(), "added", Toast.LENGTH_SHORT).show()
                 }
+
+
 
         }
     }
@@ -115,12 +129,22 @@ class PostFragment : Fragment() {
                     }
                 }
             }
-
                 .addOnFailureListener {
                     Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_SHORT).show()
                 }
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView?.visibility = View.VISIBLE
+
+    }
+
+
+
 
 }
