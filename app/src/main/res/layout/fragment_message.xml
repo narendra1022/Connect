@@ -9,7 +9,8 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
+        android:background="#00BB86FC"
         android:orientation="horizontal">
 
         <TextView
@@ -22,6 +23,14 @@
             android:layout_marginStart="10dp"
             android:layout_gravity="center"
             />
+
+        <ImageView
+            android:id="@+id/chat"
+            android:src="@drawable/ms"
+            android:layout_width="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="220dp"
+            android:layout_height="60dp"/>
 
     </LinearLayout>
 

@@ -8,49 +8,38 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.chatapp.Adapters.profilepostsAdapter
+import com.example.chatapp.Adapters.VideosAdapter
+import com.example.chatapp.Adapters.postAdapter
 import com.example.chatapp.PostData
 import com.example.chatapp.R
 import com.example.chatapp.Resource
-import com.example.chatapp.ViewModels.SavedListsViewModel
-import com.example.chatapp.ViewModels.profilepostsViewmodel
-import com.example.chatapp.databinding.FragmentPostListBinding
-import com.example.chatapp.databinding.FragmentSavedBinding
+import com.example.chatapp.ViewModels.VideoViewModel
+import com.example.chatapp.ViewModels.postViewModal
+import com.example.chatapp.databinding.FragmentReelBinding
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 
-class SavedFragment : Fragment() {
+class ReelFragment : Fragment() {
 
-    private lateinit var binding: FragmentSavedBinding
-    private val viewmodel by viewModels<SavedListsViewModel>()
-    private lateinit var spad: profilepostsAdapter
+
+    private lateinit var spad: VideosAdapter
+    private lateinit var binding: FragmentReelBinding
+    private val viewmodel by viewModels<VideoViewModel>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSavedBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
+        binding=FragmentReelBinding.inflate(layoutInflater)
         return binding.root
-
-    }
-
-    private fun SetupSpecialProductRv() {
-        spad = profilepostsAdapter()
-        binding.recyclerViewPosts.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext())
-            val adapter = spad
-            binding.recyclerViewPosts.adapter = adapter
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val _data = MutableStateFlow<Resource<List<PostData>>>(Resource.unspecified())
         val data: StateFlow<Resource<List<PostData>>> = _data
@@ -76,13 +65,23 @@ class SavedFragment : Fragment() {
                     }
 
                     else -> Unit
+
                 }
             }
         }
 
-
-
-
     }
+
+    private fun SetupSpecialProductRv() {
+
+        spad = VideosAdapter()
+        binding.videos.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val adapter = spad
+            binding.videos.adapter = adapter
+        }
+    }
+
 
 }

@@ -15,10 +15,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.chatapp.MainActivity
 import com.example.chatapp.OTPVerification.FirebaseLoginResponseStates
 import com.example.chatapp.OTPVerification.LoginViewModel
 import com.example.chatapp.R
 import com.example.chatapp.UserData
+import com.example.chatapp.Util.hide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -52,8 +54,8 @@ class OTPVerifyFragment(
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_o_t_pverification, container, false)
 
-            val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-            bottomNavigationView?.visibility = View.GONE
+        hide()
+
 
 
     }
@@ -61,9 +63,12 @@ class OTPVerifyFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val textViewMobileNumber: TextView = view.findViewById(R.id.phoneTVSignupVerification)
         textViewMobileNumber.text = enteredMobileNumber
         initializeAllViewsAndVars()
+
+
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
@@ -170,14 +175,14 @@ class OTPVerifyFragment(
             firebaseDatabase.reference.child("users")
                 .child(userUid)
                 .setValue(hashMap).addOnSuccessListener {
-                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
                 }
             FirebaseFirestore.getInstance().collection("users")
                 .document(FirebaseAuth.getInstance().uid!!)
                 .set(hashMap).addOnSuccessListener {
-                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show()
                 }.addOnFailureListener {
                     Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
                 }
@@ -263,13 +268,17 @@ class OTPVerifyFragment(
         mContext = context
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        (activity as MainActivity).hideBottomNavigation()
+//
+//    }
+
     override fun onDestroyView() {
         super.onDestroyView()
 
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.VISIBLE
-
         countDownTimer.cancel()
     }
+
 
 }

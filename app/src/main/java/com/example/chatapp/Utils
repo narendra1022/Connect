@@ -1,0 +1,10 @@
+fun hideBottomNavigation(activity: AppCompatActivity) {
+    activity.supportFragmentManager.addOnBackStackChangedListener {
+        val fragment = activity.supportFragmentManager.findFragmentById(R.id.container)
+        if (fragment is YourFragment) {
+            activity.bottom_navigation.visibility = View.GONE
+        } else {
+            activity.bottom_navigation.visibility = View.VISIBLE
+        }
+    }
+}

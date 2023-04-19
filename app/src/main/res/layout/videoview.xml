@@ -58,13 +58,13 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:scaleType="fitXY"
+    <VideoView
+        android:scaleType="centerCrop"
         android:id="@+id/post"
+        android:keepScreenOn="true"
         android:layout_margin="11dp"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:src="@color/black"
+        android:layout_height="640dp"
         />
 
     <LinearLayout

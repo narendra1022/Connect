@@ -14,7 +14,10 @@ import com.example.chatapp.Fragments.SendOTPFragment
 import com.example.chatapp.Fragments.HomeFragment
 import com.example.chatapp.Fragments.MessagingFragment
 import com.example.chatapp.Fragments.PostFragment
+import com.example.chatapp.Fragments.PostListFragment
+import com.example.chatapp.Fragments.ReelFragment
 import com.example.chatapp.Fragments.SettingsFragment
+import com.example.chatapp.Fragments.VideoOrPhotoFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -27,48 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        inflateFragment()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-        val post = findViewById<FloatingActionButton>(R.id.fab)
-        post.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .addToBackStack("change")
-                .add(R.id.main, PostFragment()).commit()
-
-        }
-
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.main, HomeFragment()).commit()
-                    true
-                }
-
-                R.id.navigation_message -> {
-                    // Handle click on Dashboard button
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.main, MessagingFragment()).commit()
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    // Handle click on Notifications button
-                    supportFragmentManager.beginTransaction()
-                        .add(R.id.main, SettingsFragment()).commit()
-                    true
-                }
-
-                else -> false
-            }
-        }
-
-
-    }
-
-    private fun inflateFragment() {
         val firebaseAuthInst: FirebaseAuth = FirebaseAuth.getInstance()
         if (firebaseAuthInst.currentUser == null) {
             supportFragmentManager.beginTransaction()
@@ -77,17 +38,51 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.main, HomeFragment()).commit()
         }
+
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    supportFragmentManager.beginTransaction().addToBackStack("")
+                        .add(R.id.main, HomeFragment()).commit()
+                    true
+                }
+
+                R.id.navigation_message -> {
+                    // Handle click on Dashboard button
+                    supportFragmentManager.beginTransaction().addToBackStack("")
+                        .add(R.id.main, ReelFragment()).commit()
+                    true
+                }
+
+                R.id.navigation_profile -> {
+                    // Handle click on Notifications button
+                    supportFragmentManager.beginTransaction().addToBackStack("")
+                        .add(R.id.main, SettingsFragment()).commit()
+                    true
+                }
+
+                R.id.post_ -> {
+                    // Handle click on Notifications button
+                    supportFragmentManager.beginTransaction().addToBackStack("")
+                        .add(R.id.main, VideoOrPhotoFragment()).commit()
+                    true
+                }
+
+                else -> false
+            }
+        }
+    }
+    private fun inflateFragment() {
+
     }
 
     companion object {
         const val READ_PERMISSION = 101
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        val post = findViewById<FloatingActionButton>(R.id.fab)
-
     }
 
 }

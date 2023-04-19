@@ -16,6 +16,7 @@ class profilepostsAdapter:RecyclerView.Adapter <profilepostsAdapter.viewHolder>(
         fun bind(data :PostData){
             binding.apply {
                 Glide.with(itemView).load(data.postUrl).into(postss)
+                li.text=data.likes.toString()+" likes"
             }
         }
     }

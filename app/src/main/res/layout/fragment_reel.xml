@@ -4,28 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Fragments.SavedFragment">
+    tools:context=".Fragments.ReelFragment">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Saved posts : "
-        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
         android:textStyle="bold"
-        android:layout_marginStart="20sp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"
-
+        android:textSize="30dp"
+        android:text="Videos :"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_posts"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/videos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        tools:listitem="@layout/postlist"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="15dp" />
+        android:layout_height="match_parent"
+        />
+
     <ProgressBar
         android:id="@+id/pb1"
         android:layout_width="wrap_content"
@@ -33,5 +32,6 @@
         android:layout_gravity="center"
         android:indeterminateTint="@color/black"
         android:visibility="gone" />
+
 
 </FrameLayout>

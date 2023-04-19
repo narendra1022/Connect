@@ -9,7 +9,19 @@
     <ImageView
         android:src="@color/black"
         android:id="@+id/postss"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="340dp"/>
+        android:layout_marginBottom="40dp"
+        android:layout_height="300dp"/>
+
+    <TextView
+        android:id="@+id/li"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Likes"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="bottom"
+        />
 
 </androidx.cardview.widget.CardView>

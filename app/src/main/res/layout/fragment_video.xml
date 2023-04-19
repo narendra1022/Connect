@@ -17,7 +17,7 @@
         android:elevation="10dp"
         >
 
-        <ImageView
+        <VideoView
             android:id="@+id/post_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,11 +51,13 @@
         android:layout_marginBottom="70dp"
         android:background="@drawable/back"
         android:gravity="center"
-        android:text="  post  "
+        android:text="  post Video "
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+
 
 
 </FrameLayout>

@@ -7,9 +7,11 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ProgressBar
+import com.example.chatapp.MainActivity
 import com.example.chatapp.OTPVerification.FirebaseLoginResponseStates
 import com.example.chatapp.OTPVerification.LoginViewModel
 import com.example.chatapp.R
+import com.example.chatapp.Util.hide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -26,13 +28,14 @@ class SendOTPFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_send_o_t_p, container, false)
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.GONE
+
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeViewsAndVariables()
+        hide()
+        initializeViewsAndVariables ()
     }
 
     private fun initializeViewsAndVariables() {
@@ -68,10 +71,12 @@ class SendOTPFragment : Fragment() {
 
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.fragment_slide_in, R.anim.fragment_slide_out)
-                    .replace(R.id.main, OTPVerifyFragment(
-                        requireContext(),
-                        "+91${editTextSignUp.text}"
-                    ))
+                    .replace(
+                        R.id.main, OTPVerifyFragment(
+                            requireContext(),
+                            "+91${editTextSignUp.text}"
+                        )
+                    )
                     .commit()
 
             } else if (it is FirebaseLoginResponseStates.ErrorLoginState) {
@@ -90,12 +95,6 @@ class SendOTPFragment : Fragment() {
         return enteredMobileNumber.length == 10 && (enteredMobileNumber[0] in '6'..'9')
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.VISIBLE
-    }
 
 
 }

@@ -3,6 +3,7 @@ package com.example.chatapp.Adapters
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,13 +16,14 @@ import com.example.chatapp.PostData
 import com.example.chatapp.PostsOperationsInterface
 import com.example.chatapp.R
 import com.example.chatapp.databinding.PostviewBinding
+import com.example.chatapp.databinding.VideoviewBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
-class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
+class VideosAdapter : RecyclerView.Adapter<VideosAdapter.viewHolder>() {
 
-    inner class viewHolder(val binding: PostviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class viewHolder(val binding: VideoviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(product: PostData) {
 
             binding.share.setOnClickListener {
@@ -36,11 +38,13 @@ class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
                 Glide.with(itemView).load(product.profilePicUrl).into(pic)
                 name.text = product.name
                 city.text = product.userLocation
-                Glide.with(itemView).load(product.postUrl).into(post)
+                post.setVideoPath(product.postUrl)
+                post.start()
                 capt.text = product.caption
 
-            }
 
+
+            }
 
         }
     }
@@ -59,7 +63,7 @@ class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
         return viewHolder(
-            PostviewBinding.inflate(
+            VideoviewBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
@@ -85,7 +89,7 @@ class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
 
         holder.binding.like.setOnClickListener {
 
-            val collectionRef = FirebaseFirestore.getInstance().collection("posts")
+            val collectionRef = FirebaseFirestore.getInstance().collection("videos")
             val query = collectionRef.whereEqualTo("postUrl", product.postUrl.toString())
             query.get().addOnSuccessListener { querySnapshot ->
                 val documentSnapshot = querySnapshot.documents.firstOrNull()
@@ -104,7 +108,7 @@ class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
 
         holder.binding.undoLike.setOnClickListener {
 
-            val collectionRef = FirebaseFirestore.getInstance().collection("posts")
+            val collectionRef = FirebaseFirestore.getInstance().collection("videos")
             val query = collectionRef.whereEqualTo("postUrl", product.postUrl.toString())
             query.get().addOnSuccessListener { querySnapshot ->
                 val documentSnapshot = querySnapshot.documents.firstOrNull()
@@ -173,10 +177,5 @@ class postAdapter : RecyclerView.Adapter<postAdapter.viewHolder>() {
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-
-    interface OnItemClickListener {
-        fun onItemClick(data: String)
-    }
-
 
 }

@@ -16,21 +16,32 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.chatapp.Adapters.ViewpagerAdapter
+import com.example.chatapp.Adapters.profilepostsAdapter
 import com.example.chatapp.MainActivity
+import com.example.chatapp.PostData
 import com.example.chatapp.R
+import com.example.chatapp.Resource
+import com.example.chatapp.ViewModels.profilepostsViewmodel
 import com.example.chatapp.databinding.FragmentSettingsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import java.util.Date
 
 class SettingsFragment : Fragment() {
 
     private lateinit var binding: FragmentSettingsBinding
     private var uri: Uri? = null
-
+    private val viewmodel by viewModels<profilepostsViewmodel>()
+    private lateinit var spad: profilepostsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,13 +49,48 @@ class SettingsFragment : Fragment() {
     ): View? {
         binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        val adapte = ViewpagerAdapter(parentFragmentManager)
-        adapte.addFragment(PostListFragment(), "Posts")
-        adapte.addFragment(SavedFragment(), "Saved Posts")
-        binding.viewPager.adapter = adapte
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+
+        val _data = MutableStateFlow<Resource<List<PostData>>>(Resource.unspecified())
+        val data: StateFlow<Resource<List<PostData>>> = _data
+
+        SetupSpecialProductRv()
+
+
+        lifecycleScope.launchWhenStarted {
+            viewmodel.data.collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.pb1.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Success -> {
+                        spad.differ.submitList(it.data)
+
+                        binding.pb1.visibility = View.INVISIBLE
+                    }
+
+                    is Resource.Error -> {
+                        binding.pb1.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun SetupSpecialProductRv() {
+        spad = profilepostsAdapter()
+        binding.recyclerViewPost.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext())
+            val adapter = spad
+            binding.recyclerViewPost.adapter = adapter
+        }
     }
 
 
@@ -63,6 +109,13 @@ class SettingsFragment : Fragment() {
 
         binding.editName.setOnClickListener {
             dialog()
+        }
+
+        binding.sav.setOnClickListener {
+            val t=parentFragmentManager.beginTransaction()
+            t.add(R.id.main,SavedFragment())
+                .addToBackStack("change")
+                .commit()
         }
 
 

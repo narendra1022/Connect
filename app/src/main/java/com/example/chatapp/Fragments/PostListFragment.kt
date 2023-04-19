@@ -34,34 +34,10 @@ class PostListFragment : Fragment() {
         binding = FragmentPostListBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
 
-        val _data = MutableStateFlow<Resource<List<PostData>>>(Resource.unspecified())
-        val data: StateFlow<Resource<List<PostData>>> = _data
+        val t=parentFragmentManager.beginTransaction()
+        t.add(R.id.main,HomeFragment())
+            .commit()
 
-        SetupSpecialProductRv()
-
-
-        lifecycleScope.launchWhenStarted {
-            viewmodel.data.collectLatest {
-                when (it) {
-                    is Resource.Loading -> {
-                        binding.pb1.visibility = View.VISIBLE
-                    }
-
-                    is Resource.Success -> {
-                        spad.differ.submitList(it.data)
-
-                        binding.pb1.visibility = View.INVISIBLE
-                    }
-
-                    is Resource.Error -> {
-                        binding.pb1.visibility = View.INVISIBLE
-                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                    }
-
-                    else -> Unit
-                }
-            }
-        }
 
         return binding.root
     }
@@ -71,14 +47,5 @@ class PostListFragment : Fragment() {
 
     }
 
-    private fun SetupSpecialProductRv() {
-        spad = profilepostsAdapter()
-        binding.recyclerViewPosts.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext())
-            val adapter = spad
-            binding.recyclerViewPosts.adapter = adapter
-        }
-    }
 
 }

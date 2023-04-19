@@ -21,7 +21,6 @@ class CommentFragment : Fragment(), postAdapter.OnItemClickListener {
         // Inflate the layout for this fragment
 
         val adapter = postAdapter()
-        adapter.onItemClickListener = this
 
         return binding.root
     }
