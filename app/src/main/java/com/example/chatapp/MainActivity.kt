@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.service.controls.actions.FloatAction
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.chatapp.Fragments.SendOTPFragment
 import com.example.chatapp.Fragments.HomeFragment
@@ -20,6 +22,7 @@ import com.example.chatapp.Fragments.SettingsFragment
 import com.example.chatapp.Fragments.VideoOrPhotoFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationBarView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -30,54 +33,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val firebaseAuthInst: FirebaseAuth = FirebaseAuth.getInstance()
-        if (firebaseAuthInst.currentUser == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.main, SendOTPFragment()).commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.main, HomeFragment()).commit()
-        }
-
+//        val firebaseAuthInst: FirebaseAuth = FirebaseAuth.getInstance()
+//        if (firebaseAuthInst.currentUser == null) {
+//            supportFragmentManager.beginTransaction()
+//                .add(R.id.main, SendOTPFragment()).commit()
+//        } else {
+//            supportFragmentManager.beginTransaction()
+//                .add(R.id.main, HomeFragment()).commit()
+//        }
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        val windowInsetsController = ViewCompat.getWindowInsetsController(window.decorView)
+        windowInsetsController?.isAppearanceLightNavigationBars = true
+        windowInsetsController?.isAppearanceLightStatusBars = true
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    supportFragmentManager.beginTransaction().addToBackStack("")
-                        .add(R.id.main, HomeFragment()).commit()
-                    true
-                }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav) as NavHostFragment
+        navController = navHostFragment.navController
+        val b = findViewById<BottomNavigationView>(R.id.navbarr)
+        NavigationUI.setupWithNavController(b, navController)
 
-                R.id.navigation_message -> {
-                    // Handle click on Dashboard button
-                    supportFragmentManager.beginTransaction().addToBackStack("")
-                        .add(R.id.main, ReelFragment()).commit()
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    // Handle click on Notifications button
-                    supportFragmentManager.beginTransaction().addToBackStack("")
-                        .add(R.id.main, SettingsFragment()).commit()
-                    true
-                }
-
-                R.id.post_ -> {
-                    // Handle click on Notifications button
-                    supportFragmentManager.beginTransaction().addToBackStack("")
-                        .add(R.id.main, VideoOrPhotoFragment()).commit()
-                    true
-                }
-
-                else -> false
-            }
-        }
-    }
-    private fun inflateFragment() {
+        b.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
 
     }
 

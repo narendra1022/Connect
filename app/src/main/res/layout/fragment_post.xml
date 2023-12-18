@@ -49,7 +49,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginTop="860dp"
         android:layout_marginBottom="70dp"
-        android:background="@drawable/back"
+        android:background="@drawable/backg"
         android:gravity="center"
         android:text="  post  "
         android:textAllCaps="true"

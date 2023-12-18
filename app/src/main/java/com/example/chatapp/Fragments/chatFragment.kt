@@ -46,7 +46,7 @@ class chatFragment : Fragment() {
         // Inflate the layout for this fragment
 
 
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.navbarr)
         bottomNavigationView?.visibility = View.GONE
 
         binding = FragmentChatBinding.inflate(layoutInflater)
@@ -139,7 +139,7 @@ class chatFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.navbarr)
         bottomNavigationView?.visibility = View.VISIBLE
 
     }

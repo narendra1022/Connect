@@ -16,19 +16,17 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
 
+//        val splashImage = findViewById<ImageView>(R.id.splash_image)
+//        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+//        splashImage.startAnimation(fadeInAnimation)
+        startActivity(Intent(this, MainActivity::class.java))
 
-
-        val splashImage = findViewById<ImageView>(R.id.splash_image)
-        val fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        splashImage.startAnimation(fadeInAnimation)
-
-
-        Handler().postDelayed(
-            {
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }, 3500
-        )
+//        Handler().postDelayed(
+//            {
+//                startActivity(Intent(this, MainActivity::class.java))
+//                finish()
+//            }, 3500
+//        )
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.MainActivity
 import com.example.chatapp.PostData
 import com.example.chatapp.R
@@ -93,10 +94,7 @@ class VideoFragment : Fragment() {
 //                    val data =doc.id
             Toast.makeText(requireContext(), "Posted", Toast.LENGTH_SHORT).show()
 
-            val t = parentFragmentManager.beginTransaction()
-            t.add(R.id.main, HomeFragment())
-                .addToBackStack("change")
-                .commit()
+            findNavController().navigate(R.id.action_videoFragment_to_homeFragment)
 
         }
 

@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.chatapp.MainActivity
 import com.example.chatapp.R
@@ -43,9 +44,6 @@ class ProfileFragment : Fragment() {
 
         hide()
 
-        val bottomNavigationView =
-            activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.GONE
 
 
         firebaseDatabase = FirebaseDatabase.getInstance(); firebaseAuth = FirebaseAuth.getInstance()
@@ -75,7 +73,7 @@ class ProfileFragment : Fragment() {
                     Glide.with(requireContext()).load(it.get("profilePicUrl"))
                         .into(binding.photo)
                     binding.phone.text = it.getString("contactNo")
-                    binding.editname.text = it.getString("name")
+//                    binding.editname.text = it.getString("name")
                 }
             }
 
@@ -148,10 +146,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.next.setOnClickListener {
-            val transaction = parentFragmentManager.beginTransaction()
-            transaction.replace(R.id.main, HomeFragment())
-                .addToBackStack(null)
-                .commit()
+           findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
         }
 
 
@@ -215,7 +210,7 @@ class ProfileFragment : Fragment() {
                             db.collection("Users").document(FirebaseAuth.getInstance().uid!!).get()
                                 .addOnSuccessListener {
 
-                                    binding.editname.text = it.getString("name")
+//                                    binding.editname.text = it.getString("name")
                                 }
 
                             alertDialog.dismiss()

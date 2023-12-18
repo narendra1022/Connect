@@ -27,7 +27,6 @@
 
 
 
-
     <ProgressBar
         android:id="@+id/pb1"
         android:layout_width="wrap_content"
@@ -38,12 +37,11 @@
        />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/recyclerView"
         android:layout_marginTop="60dp"
         android:background="@color/white"
-        tools:listitem="@layout/postview"
-        />
+        tools:listitem="@layout/postview" />
 
 </FrameLayout>

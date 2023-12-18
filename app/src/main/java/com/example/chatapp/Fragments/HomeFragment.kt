@@ -39,8 +39,6 @@ class HomeFragment : Fragment() {
     private lateinit var spad: postAdapter
     private lateinit var binding: FragmentMessageBinding
     private val viewmodel by viewModels<postViewModal>()
-    private val firebase = Firebase.firestore
-    private var id: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,76 +70,8 @@ class HomeFragment : Fragment() {
         }
 
 
-//
-//        binding.pic.setOnClickListener {
-//
-//            val t = parentFragmentManager.beginTransaction()
-//            t.replace(R.id.nav_host_fragment, PostFragment())
-//                .addToBackStack("change")
-//                .commit()
-//
-////            val action = HomeFragmentDirections.actionHomeFragmentToPostFragment()
-////            findNavController().navigate(action)
-////
-//
-////            findNavController().navigate(R.id.action_homeFragment_to_postFragment)
-//        }
-
-//        spad.onItemClick = {
-//
-//            val postUrl = it.postUrl.toString()
-//
-//            val mDialog = AlertDialog.Builder(requireContext())
-//            val inflater = layoutInflater
-//            val mDialogView = inflater.inflate(R.layout.edit_name, null)
-//            mDialog.setView(mDialogView)
-//            val addEmailbtn: Button = mDialogView.findViewById(R.id.addBtn)
-//            val addEmail: TextView = mDialogView.findViewById(R.id.addEmail)
-//            mDialog.setTitle("Edit name")
-//            val alertDialog = mDialog.create()
-//            alertDialog.show()
-//
-//            addEmailbtn.setOnClickListener {
-//
-//                val mail = addEmail.text.toString()
-//                if (mail.length.equals(0)) {
-//                    Toast.makeText(requireContext(), "Post Comment", Toast.LENGTH_SHORT).show()
-//                } else {
-//
-//                    FirebaseFirestore.getInstance().collection("Users")
-//                        .document(FirebaseAuth.getInstance().uid!!)
-//                        .update("name", mail).addOnSuccessListener {
-//                            Toast.makeText(
-//                                requireContext(),
-//                                "Comment Added Successfully",
-//                                Toast.LENGTH_SHORT
-//                            )
-//                                .show()
-//                            alertDialog.dismiss()
-//                        }
-//                        .addOnFailureListener {
-//                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
-//                                .show()
-//                        }
-//                }
-//
-//
-//            }
-//        }
-
-//        spad.onItemClick2 = {
-//            val shareIntent = Intent(Intent.ACTION_SEND)
-//            shareIntent.type = "text/plain"
-//            shareIntent.putExtra(Intent.EXTRA_TEXT, it.postUrl)
-//            startActivity(Intent.createChooser(shareIntent, "Share post"))
-//        }
-
-
         binding.chat.setOnClickListener {
-            val t = parentFragmentManager.beginTransaction()
-            t.add(R.id.main, MessagingFragment())
-                .addToBackStack("change")
-                .commit()
+            findNavController().navigate(R.id.action_homeFragment_to_messagingFragment)
         }
 
         lifecycleScope.launchWhenStarted {
@@ -181,11 +111,5 @@ class HomeFragment : Fragment() {
 
     }
 
-
-    override fun onResume() {
-        super.onResume()
-
-        show()
-    }
 
 }

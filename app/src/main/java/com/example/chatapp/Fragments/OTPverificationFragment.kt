@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.MainActivity
 import com.example.chatapp.OTPVerification.FirebaseLoginResponseStates
 import com.example.chatapp.OTPVerification.LoginViewModel
@@ -134,11 +135,7 @@ class OTPVerifyFragment(
     }
 
     private fun redirectToLocationAccessFragment() {
-        parentFragmentManager.popBackStack(); parentFragmentManager.beginTransaction().replace(
-            R.id.main,
-            ProfileFragment()
-            // LocationAccessFragment(appContext)
-        ).commit()
+        findNavController().navigate(R.id.action_OTPVerifyFragment_to_profileFragment)
     }
 
     private fun addUserToLocalStorage(userData: UserData) {
@@ -186,14 +183,6 @@ class OTPVerifyFragment(
                 }.addOnFailureListener {
                     Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
                 }
-
-//            FirebaseFirestore.getInstance().collection("posts")
-//                .document(FirebaseAuth.getInstance().uid!!)
-//                .set(hashMap).addOnSuccessListener {
-//                    Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show()
-//                }.addOnFailureListener {
-//                    Toast.makeText(mContext, it.toString(), Toast.LENGTH_SHORT).show()
-//                }
 
             FirebaseFirestore.getInstance().collection("Users")
                 .document(FirebaseAuth.getInstance().uid!!)
@@ -261,18 +250,10 @@ class OTPVerifyFragment(
         }.start()
     }
 
-    // Canceling the CountDown when the Fragment is Destroyed
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        (activity as MainActivity).hideBottomNavigation()
-//
-//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

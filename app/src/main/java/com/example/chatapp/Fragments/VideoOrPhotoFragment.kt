@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.R
 import com.example.chatapp.databinding.FragmentVideoOrPhotoBinding
 
@@ -28,17 +29,11 @@ class VideoOrPhotoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.upload.setOnClickListener {
-            val t = parentFragmentManager.beginTransaction()
-            t.add(R.id.main, PostFragment())
-                .addToBackStack("change")
-                .commit()
+            findNavController().navigate(R.id.action_videoOrPhotoFragment_to_postFragment)
         }
 
         binding.uploa.setOnClickListener {
-            val t = parentFragmentManager.beginTransaction()
-            t.add(R.id.main, VideoFragment())
-                .addToBackStack("change")
-                .commit()
+           findNavController().navigate(R.id.action_videoOrPhotoFragment_to_videoFragment)
         }
     }
 

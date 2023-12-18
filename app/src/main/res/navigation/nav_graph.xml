@@ -7,18 +7,90 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.chatapp.Fragments.SendOTPFragment"
-        tools:layout="@layout/fragment_home" >
+        android:name="com.example.chatapp.Fragments.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="HomeFragment" >
         <action
-            android:id="@+id/action_homeFragment_to_postFragment"
-            app:destination="@id/postFragment" />
+            android:id="@+id/action_homeFragment_to_messagingFragment"
+            app:destination="@id/messagingFragment" />
     </fragment>
     <fragment
         android:id="@+id/postFragment"
+        tools:layout="@layout/fragment_post"
         android:name="com.example.chatapp.Fragments.PostFragment"
-        tools:layout="@layout/fragment_post">
+        android:label="PostFragment" >
         <action
             android:id="@+id/action_postFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/reelFragment"
+        android:name="com.example.chatapp.Fragments.ReelFragment"
+        android:label="fragment_reel"
+        tools:layout="@layout/fragment_reel" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.chatapp.Fragments.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_savedFragment"
+            app:destination="@id/savedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/messagingFragment"
+        android:name="com.example.chatapp.Fragments.MessagingFragment"
+        android:label="MessagingFragment" >
+        <action
+            android:id="@+id/action_messagingFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoOrPhotoFragment"
+        android:name="com.example.chatapp.Fragments.VideoOrPhotoFragment"
+        android:label="fragment_video_or_photo"
+        tools:layout="@layout/fragment_video_or_photo" >
+        <action
+            android:id="@+id/action_videoOrPhotoFragment_to_videoFragment"
+            app:destination="@id/videoFragment" />
+        <action
+            android:id="@+id/action_videoOrPhotoFragment_to_postFragment"
+            app:destination="@id/postFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/videoFragment"
+        tools:layout="@layout/fragment_video"
+        android:name="com.example.chatapp.Fragments.VideoFragment"
+        android:label="VideoFragment" >
+        <action
+            android:id="@+id/action_videoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.chatapp.Fragments.chatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/OTPVerifyFragment"
+        android:name="com.example.chatapp.Fragments.OTPVerifyFragment"
+        android:label="OTPVerifyFragment" >
+        <action
+            android:id="@+id/action_OTPVerifyFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.chatapp.Fragments.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedFragment"
+        android:name="com.example.chatapp.Fragments.SavedFragment"
+        android:label="fragment_saved"
+        tools:layout="@layout/fragment_saved" />
+
 </navigation>

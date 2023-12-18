@@ -87,7 +87,7 @@ class SendOTPFragment : Fragment() {
                     "Error : ${it.errorMessage}",
                     Snackbar.LENGTH_LONG
                 ).show()
-            }
+             }
         }
     }
 

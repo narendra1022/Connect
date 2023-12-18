@@ -58,14 +58,21 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:scaleType="fitXY"
-        android:id="@+id/post"
-        android:layout_margin="11dp"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:src="@color/black"
-        />
+        android:layout_margin="11dp"
+        app:cardCornerRadius="30dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@color/black"
+            />
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_marginStart="13dp"
@@ -75,36 +82,36 @@
 
         <ImageView
             android:id="@+id/like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_like_post"/>
         <ImageView
             android:id="@+id/undo_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:visibility="gone"
             android:src="@drawable/ic_like_post_filled"/>
 
         <ImageView
             android:id="@+id/comment"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_marginStart="10dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_comment_post"/>
         <ImageView
             android:id="@+id/share"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_marginStart="10dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_send_post"/>
 
 
         <ImageView
             android:id="@+id/save"
             android:layout_gravity="end"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_marginStart="12dp"
-            android:layout_height="40dp"
+            android:layout_height="38dp"
             android:src="@drawable/baseline_bookmark_border_24" />
 
         <ImageView

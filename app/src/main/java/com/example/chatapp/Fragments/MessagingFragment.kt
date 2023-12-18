@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.SnapHelper
@@ -54,11 +55,7 @@ class MessagingFragment : Fragment() {
             val fragment = chatFragment()
             fragment.arguments = b
 
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main, fragment)
-                .setCustomAnimations(R.anim.fragment_slide_in, R.anim.fragment_slide_out)
-                .addToBackStack(null)
-                .commit()
+            findNavController().navigate(R.id.action_messagingFragment_to_chatFragment)
 
 
         }

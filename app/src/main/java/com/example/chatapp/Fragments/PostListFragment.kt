@@ -34,11 +34,6 @@ class PostListFragment : Fragment() {
         binding = FragmentPostListBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
 
-        val t=parentFragmentManager.beginTransaction()
-        t.add(R.id.main,HomeFragment())
-            .commit()
-
-
         return binding.root
     }
 

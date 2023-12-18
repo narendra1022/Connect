@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.example.chatapp.MainActivity
 import com.example.chatapp.PostData
 import com.example.chatapp.R
@@ -49,8 +50,6 @@ class PostFragment : Fragment() {
         // Inflate the layout for this fragment
 
 
-        val bottomNavigationView = activity?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView?.visibility = View.GONE
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userRef = FirebaseFirestore.getInstance().collection("Users").document(currentUser?.uid!!)
@@ -104,10 +103,7 @@ class PostFragment : Fragment() {
                     val data =doc.id
                     Toast.makeText(requireContext(), "Posted", Toast.LENGTH_SHORT).show()
 
-                    val t=parentFragmentManager.beginTransaction()
-                    t.add(R.id.main,HomeFragment())
-                        .addToBackStack("change")
-                        .commit()
+                    findNavController().navigate(R.id.action_postFragment_to_homeFragment)
 
                 }
 

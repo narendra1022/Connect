@@ -18,6 +18,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.chatapp.Adapters.ViewpagerAdapter
@@ -87,7 +89,7 @@ class SettingsFragment : Fragment() {
         spad = profilepostsAdapter()
         binding.recyclerViewPost.apply {
             layoutManager =
-                LinearLayoutManager(requireContext())
+                GridLayoutManager(requireContext(),2)
             val adapter = spad
             binding.recyclerViewPost.adapter = adapter
         }
@@ -112,10 +114,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.sav.setOnClickListener {
-            val t=parentFragmentManager.beginTransaction()
-            t.add(R.id.main,SavedFragment())
-                .addToBackStack("change")
-                .commit()
+            findNavController().navigate(R.id.action_settingsFragment_to_savedFragment)
         }
 
 

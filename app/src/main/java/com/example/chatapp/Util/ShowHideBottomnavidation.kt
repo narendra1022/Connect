@@ -7,10 +7,10 @@ import com.example.chatapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 fun Fragment.hide(){
-    val bn=(activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+    val bn=(activity as MainActivity).findViewById<BottomNavigationView>(R.id.navbarr)
     bn.visibility= View.GONE
 }
 fun Fragment.show(){
-    val bn=(activity as MainActivity).findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+    val bn=(activity as MainActivity).findViewById<BottomNavigationView>(R.id.navbarr)
     bn.visibility= View.VISIBLE
 }

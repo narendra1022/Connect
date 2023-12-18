@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:weightSum="10"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="7dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
@@ -55,62 +58,76 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
-    <VideoView
-        android:scaleType="centerCrop"
-        android:id="@+id/post"
-        android:keepScreenOn="true"
-        android:layout_margin="11dp"
-        android:layout_width="match_parent"
-        android:layout_height="640dp"
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/progressbar"
         />
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/exoPlayerView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:resize_mode="fill"
+        app:use_controller="false"/>
 
     <LinearLayout
         android:layout_marginStart="13dp"
         android:layout_width="match_parent"
+        android:layout_marginBottom="75dp"
+        android:layout_marginEnd="13dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_like_post"/>
         <ImageView
             android:id="@+id/undo_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:visibility="gone"
             android:src="@drawable/ic_like_post_filled"/>
 
         <ImageView
             android:id="@+id/comment"
-            android:layout_width="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_marginStart="12dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_comment_post"/>
         <ImageView
             android:id="@+id/share"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_marginStart="10dp"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_send_post"/>
 
 
         <ImageView
             android:id="@+id/save"
             android:layout_gravity="end"
-            android:layout_width="40dp"
+            android:layout_width="35dp"
             android:layout_marginStart="12dp"
-            android:layout_height="40dp"
+            android:layout_height="38dp"
             android:src="@drawable/baseline_bookmark_border_24" />
 
         <ImageView
             android:id="@+id/saved"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="38dp"
             android:layout_marginStart="12dp"
             android:visibility="gone"
             android:src="@drawable/bookmark"/>
@@ -121,13 +138,16 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/capt"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="25dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/posts_likeCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:maxLength="250"
             android:maxLines="1"
@@ -149,19 +169,19 @@
 
     </LinearLayout>
 
-
-
     <TextView
         android:id="@+id/capt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/black"
         android:text="New post"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="10dp"
         />
 
-</LinearLayout>
+</RelativeLayout>
 
