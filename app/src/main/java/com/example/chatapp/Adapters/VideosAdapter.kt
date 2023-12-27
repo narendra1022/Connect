@@ -50,16 +50,6 @@ class VideoAdapter(
                 itemView.context.startActivity(Intent.createChooser(shareIntent, "Share via"))
             }
 
-
-            binding.apply {
-                Glide.with(itemView).load(product.profilePicUrl).into(pic)
-                name.text = product.name
-                city.text = product.userLocation
-                capt.text = product.caption
-
-            }
-
-
             exoPlayer = ExoPlayer.Builder(context).build()
 
             exoPlayer.addListener(object : Player.Listener {
@@ -80,32 +70,41 @@ class VideoAdapter(
                 }
             })
 
-            binding.exoPlayerView.player = exoPlayer
+            binding.apply {
 
-            exoPlayer.seekTo(0)
-            exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+                Glide.with(itemView).load(product.profilePicUrl).into(pic)
+                name.text = product.name
+                city.text = product.userLocation
+                capt.text = product.caption
 
-            val dataSourceFactory = DefaultDataSource.Factory(context)
+                binding.exoPlayerView.player = exoPlayer
 
-            Log.d("VideoAdapter", "Media Source URL: ${product.postUrl}")
+                exoPlayer.seekTo(0)
+                exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
 
-            mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(
-                MediaItem.fromUri(
-                    Uri.parse(
-                        product.postUrl
+                val dataSourceFactory = DefaultDataSource.Factory(context)
+
+                Log.d("VideoAdapter", "Media Source URL: ${product.postUrl}")
+
+                mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(
+                    MediaItem.fromUri(
+                        Uri.parse(
+                            product.postUrl
+                        )
                     )
                 )
-            )
 
-            exoPlayer.setMediaSource(mediaSource)
-            exoPlayer.prepare()
+                exoPlayer.setMediaSource(mediaSource)
+                exoPlayer.prepare()
 
-            if (absoluteAdapterPosition == 0) {
-                exoPlayer.playWhenReady = true
-                exoPlayer.play()
+                if (absoluteAdapterPosition == 0) {
+                    exoPlayer.playWhenReady = true
+                    exoPlayer.play()
+                }
+
+                videoPreparedListener.onVideoPrepared(ExoPlayerItem(exoPlayer, absoluteAdapterPosition))
             }
 
-            videoPreparedListener.onVideoPrepared(ExoPlayerItem(exoPlayer, absoluteAdapterPosition))
         }
     }
 

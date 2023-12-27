@@ -19,6 +19,13 @@ import com.example.chatapp.PostData
 import com.example.chatapp.R
 import com.example.chatapp.Util.show
 import com.example.chatapp.databinding.FragmentVideoBinding
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.PlaybackException
+import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.REPEAT_MODE_ONE
+import com.google.android.exoplayer2.Player.RepeatMode
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,8 +42,9 @@ class VideoFragment : Fragment() {
     private var nm: String? = null
     private var lo: String? = null
     private var post: String? = "narebxa"
+    private var check: String? = ""
     private var prof: String? = null
-
+    private lateinit var player: ExoPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,11 +58,7 @@ class VideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         firebaseAuth = FirebaseAuth.getInstance()
-
-        show()
 
         binding.postImg.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -84,18 +88,13 @@ class VideoFragment : Fragment() {
         }
 
         binding.upload.setOnClickListener {
-
-//            val ca = binding.cap.text.toString()
-//
-//            val data = PostData(UUID.randomUUID().toString(),ca,post, nm, prof, lo, "post",firebaseAuth.currentUser?.uid!!.toString(),0)
-//
-//            FirebaseFirestore.getInstance().collection("videos")
-//                .add(data).addOnSuccessListener { doc ->
-//                    val data =doc.id
-            Toast.makeText(requireContext(), "Posted", Toast.LENGTH_SHORT).show()
-
-            findNavController().navigate(R.id.action_videoFragment_to_homeFragment)
-
+            if (check.equals("success")) {
+                Toast.makeText(requireContext(), "Posted", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_videoFragment_to_homeFragment)
+            } else {
+                Toast.makeText(requireContext(), "Nothing Posted", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_videoFragment_to_homeFragment)
+            }
         }
 
     }
@@ -107,8 +106,51 @@ class VideoFragment : Fragment() {
         if (data != null) {
             if (data.data != null) {
                 uri = data.data!!
-                binding.postImg.setVideoPath(data.data!!.toString())
-                binding.postImg.start()
+
+                player = ExoPlayer.Builder(binding.root.context).build()
+                binding.postImg.player = player
+
+                player.addListener(object : Player.Listener {
+                    override fun onPlayerError(error: PlaybackException) {
+                        super.onPlayerError(error)
+                        Toast.makeText(
+                            binding.root.context,
+                            "Can't play the video",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    override fun onPlaybackStateChanged(playbackState: Int) {
+                        when (playbackState) {
+                            Player.STATE_BUFFERING -> {
+                                binding.pb.visibility = View.VISIBLE
+                            }
+
+                            Player.STATE_READY, Player.STATE_ENDED -> {
+                                binding.pb.visibility = View.GONE
+                            }
+                        }
+                    }
+                })
+
+                player.seekTo(0)
+                player.repeatMode = Player.REPEAT_MODE_ONE
+
+                val dataSourceFactory = DefaultDataSource.Factory(requireContext())
+                var mediaSource =
+                    ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(
+                        com.google.android.exoplayer2.MediaItem.fromUri(
+                            Uri.parse(
+                                data.data!!.toString()
+                            )
+                        )
+                    )
+
+                player.setMediaSource(mediaSource)
+                player.prepare()
+                player.play()
+
+
             }
         }
 
@@ -140,13 +182,7 @@ class VideoFragment : Fragment() {
                         FirebaseFirestore.getInstance().collection("videos")
                             .add(data).addOnSuccessListener { doc ->
                                 val data = doc.id
-                                Toast.makeText(requireContext(), "Posted", Toast.LENGTH_SHORT)
-                                    .show()
-
-//                    val t=parentFragmentManager.beginTransaction()
-//                    t.add(R.id.main,HomeFragment())
-//                        .addToBackStack("change")
-//                        .commit()
+                                check = "success"
 
                             }
 
@@ -158,6 +194,11 @@ class VideoFragment : Fragment() {
                 }
         }
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player.stop()
     }
 
 
